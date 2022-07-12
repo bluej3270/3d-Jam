@@ -1,6 +1,6 @@
 extends Spatial
 
-var levels = 6
+var levels = 10
 var next_level_pos = Vector3(0, 0, 0)
 
 var rng = RandomNumberGenerator.new()

@@ -540,13 +540,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3, -3 )
 shape = SubResource( 30 )
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
-
 [node name="Area2" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 14, -29 )
 
 [connection signal="body_entered" from="remove_last" to="." method="_on_remove_last_body_entered"]
 [connection signal="body_entered" from="gen_next" to="." method="_on_gen_next_body_entered"]
-[connection signal="timeout" from="Timer" to="red" method="_on_Timer_timeout"]
