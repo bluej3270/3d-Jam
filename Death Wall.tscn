@@ -1,3 +1,25 @@
-[gd_scene format=2]
+[gd_scene load_steps=5 format=2]
 
-[node name="Area" type="Area"]
+[ext_resource path="res://Death Wall.gd" type="Script" id=1]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 100, 100, 500 )
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 100, 100, 100 )
+
+[sub_resource type="SpatialMaterial" id=3]
+
+[node name="Death Zone" type="Area"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 450 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[connection signal="body_entered" from="." to="." method="_on_Area_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_Area_body_exited"]

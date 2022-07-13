@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Images/Health_Fill.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Images/Health_Under.png" type="Texture" id=3]
 
 [sub_resource type="CapsuleMesh" id=1]
 
@@ -29,7 +31,48 @@ shape = SubResource( 3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.846308 )
 margin = 5.0
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Control" type="Control" parent="Pivot/Camera"]
+margin_right = 1920.0
+margin_bottom = 1080.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Pivot/Camera/Control"]
+margin_right = 72.0
+margin_bottom = 14.0
+text = "Time: 0"
+
+[node name="Label2" type="Label" parent="Pivot/Camera/Control"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -67.0
+margin_bottom = 14.0
+text = "Score: 100"
+
+[node name="TextureProgress" type="TextureProgress" parent="Pivot/Camera/Control"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -960.0
+margin_top = -40.0
+margin_right = 960.0
+rect_scale = Vector2( 1, 2 )
+max_value = 10.0
+value = 10.0
+texture_under = ExtResource( 3 )
+texture_progress = ExtResource( 2 )
+tint_progress = Color( 1, 0, 0, 1 )
+
+[node name="Invince Timer" type="Timer" parent="."]
 wait_time = 2.5
 
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[node name="Death Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="one_sec" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Invince Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="Death Timer" to="." method="_on_Death_Timer_timeout"]
+[connection signal="timeout" from="one_sec" to="." method="_on_one_sec_timeout"]

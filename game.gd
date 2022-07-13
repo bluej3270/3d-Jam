@@ -1,10 +1,10 @@
 extends Spatial
 
-var levels = 10
+var levels = 11
 var next_level_pos = Vector3(0, 0, 0)
 
 var rng = RandomNumberGenerator.new()
-
+ 
 func _ready():
 	rng.randomize()
 	generate_next()
@@ -19,3 +19,4 @@ func generate_next():
 	level.global_transform.origin = next_level_pos
 	self.add_child(level)
 	next_level_pos = level.get_next_level_pos().global_transform.origin
+	$Player.add_point()

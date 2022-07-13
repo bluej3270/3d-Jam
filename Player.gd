@@ -14,6 +14,11 @@ var invince = false
 var time_from_on_floor : float
 var coyote_time = 0.25
 
+var in_zone = false
+var health = 10
+var time = 0
+var points = -2
+
 func get_input():
 	var input_dir = Vector3()
 	# desired move in camera direction
@@ -49,8 +54,6 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump"):
 		if time_from_on_floor <= coyote_time:
 			velocity.y = 15
-		else:
-			print(time_from_on_floor)
 	velocity = move_and_slide(velocity, Vector3.UP, true)
 	
 	for i in range(0, get_slide_count()-1):
@@ -60,13 +63,11 @@ func _physics_process(delta):
 				pass
 			else:
 				get_parent().reset()
-				print('Died to touching Red')
 		elif col.collider.is_in_group('blue'):
 			if !red:
 				pass
 			else:
 				get_parent().reset()
-				print('Died to touching Blue')
 		if col.collider.is_in_group('change_red'):
 			set_red()
 			
@@ -80,10 +81,12 @@ func _ready():
 func set_red():
 	red = true
 	invince = true
+	$Pivot/Camera/Control/TextureProgress.tint_progress = Color(1.0, 0, 0)
 
 func set_blue():
 	red = false
 	invince = true
+	$Pivot/Camera/Control/TextureProgress.tint_progress = Color(0, 0, 1)
 	
 
 func is_red():
@@ -106,3 +109,34 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("exit"):
 		get_tree().quit()
+
+func zone_entered():
+	in_zone = true
+	$"Death Timer".start()
+	$one_sec.start()
+
+func zone_exited():
+	in_zone = false
+
+
+func _on_Death_Timer_timeout():
+	get_parent().reset()
+
+
+func _on_one_sec_timeout():
+	if in_zone:
+		health -= 1
+		$Pivot/Camera/Control/TextureProgress.value = health
+	elif health < 10:
+		health += 1
+		$Pivot/Camera/Control/TextureProgress.value = health
+	
+	time += 1
+	$Pivot/Camera/Control/Label.text = 'Time: ' + str(time)
+
+func add_point():
+	points += 1
+	if points < 0:
+		$Pivot/Camera/Control/Label2.text = ('Score: 0')
+	else:
+		$Pivot/Camera/Control/Label2.text = 'Score: ' + str(points)
