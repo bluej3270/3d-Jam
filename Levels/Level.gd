@@ -2,7 +2,7 @@ extends Spatial
 var timer
 
 func reset():
-	get_parent().reset()
+	get_parent().reset(true)
 
 func get_next_level_pos():
 	return $next_level

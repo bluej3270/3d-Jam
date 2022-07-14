@@ -1,6 +1,5 @@
-[gd_scene load_steps=74 format=2]
+[gd_scene load_steps=73 format=2]
 
-[ext_resource path="res://Color Changer Red.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Death Floor.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Levels/Level.gd" type="Script" id=3]
 
@@ -493,21 +492,21 @@ mesh_library = SubResource( 24 )
 collision_layer = 16
 collision_mask = 16
 data = {
-"cells": PoolIntArray(  )
+"cells": PoolIntArray( 262144, 65522, 1, 262144, 65523, 1, 262144, 65524, 1, 196608, 65525, 1, 262144, 65525, 0, 131072, 65527, 1, 196608, 65527, 0, 65536, 65529, 1, 131072, 65529, 0, 0, 65531, 524289, 65536, 65531, 0, 0, 65533, 524289, 0, 65534, 524289, 0, 65535, 524289 )
 }
 __meta__ = {
 "_editor_clip_": 0,
-"_editor_floor_": Vector3( 0, 6, 0 )
+"_editor_floor_": Vector3( 0, 4, 0 )
 }
 
 [node name="blue" type="GridMap" parent="." groups=["blue"]]
 mesh_library = SubResource( 73 )
 data = {
-"cells": PoolIntArray(  )
+"cells": PoolIntArray( 131072, 65526, 3, 65536, 65528, 3, 0, 65530, 3 )
 }
 __meta__ = {
 "_editor_clip_": 0,
-"_editor_floor_": Vector3( 0, 6, 0 )
+"_editor_floor_": Vector3( 0, 3, 0 )
 }
 
 [node name="white" type="GridMap" parent="."]
@@ -521,13 +520,13 @@ __meta__ = {
 }
 
 [node name="next_level" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, -30 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, -28 )
 
 [node name="remove_last" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
 
 [node name="CollisionShape3" type="CollisionShape" parent="remove_last"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 17, -29 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 17, -24 )
 shape = SubResource( 30 )
 
 [node name="gen_next" type="Area" parent="."]
@@ -540,9 +539,6 @@ shape = SubResource( 30 )
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
-
-[node name="Change Red" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 14, -29 )
 
 [node name="Death_Floor" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -60.9619, -28.1335 )

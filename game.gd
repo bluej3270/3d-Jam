@@ -1,6 +1,6 @@
 extends Spatial
 
-var levels = 11
+var levels = 13
 var next_level_pos = Vector3(0, 0, 0)
 
 var rng = RandomNumberGenerator.new()
@@ -9,8 +9,12 @@ func _ready():
 	rng.randomize()
 	generate_next()
 
-func reset():
+func reset(death):
+	var score = $Player.get_score()
+	var time = $Player.get_time()
 	get_tree().reload_current_scene()
+	if death:
+		$Player.show_death_screen(time, score)
 
 func generate_next():
 	var l = rng.randi_range(1, levels)

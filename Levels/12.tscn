@@ -1,8 +1,9 @@
-[gd_scene load_steps=74 format=2]
+[gd_scene load_steps=75 format=2]
 
 [ext_resource path="res://Color Changer Red.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Death Floor.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Color Changer Blue.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Levels/Level.gd" type="Script" id=3]
+[ext_resource path="res://Death Floor.tscn" type="PackedScene" id=4]
 
 [sub_resource type="SpatialMaterial" id=10]
 albedo_color = Color( 1, 0, 0, 1 )
@@ -493,35 +494,35 @@ mesh_library = SubResource( 24 )
 collision_layer = 16
 collision_mask = 16
 data = {
-"cells": PoolIntArray(  )
+"cells": PoolIntArray( 65530, 65527, 1, 65533, 65527, 1, 65530, 65529, 1, 0, 65531, 1, 65532, 65531, 1, -65536, 65533, 1, -65536, 65534, 1, -65536, 65535, 1 )
 }
 __meta__ = {
 "_editor_clip_": 0,
-"_editor_floor_": Vector3( 0, 6, 0 )
+"_editor_floor_": Vector3( 0, 0, 0 )
 }
 
 [node name="blue" type="GridMap" parent="." groups=["blue"]]
 mesh_library = SubResource( 73 )
 data = {
-"cells": PoolIntArray(  )
+"cells": PoolIntArray( -3, 65523, 3, -8, 65524, 3, -4, 65524, 3, -1, 65527, 3, -8, 65528, 3, -2, 65529, 3, -2, 65531, 3, -8, 65532, 3, -6, 65533, 3, -3, 65533, 3 )
 }
 __meta__ = {
 "_editor_clip_": 0,
-"_editor_floor_": Vector3( 0, 6, 0 )
+"_editor_floor_": Vector3( 0, -1, 0 )
 }
 
 [node name="white" type="GridMap" parent="."]
 mesh_library = SubResource( 106 )
 data = {
-"cells": PoolIntArray(  )
+"cells": PoolIntArray( -3, 65521, 4, -3, 65522, 4, -65535, 65527, 4 )
 }
 __meta__ = {
 "_editor_clip_": 0,
-"_editor_floor_": Vector3( 0, 3, 0 )
+"_editor_floor_": Vector3( 0, -1, 0 )
 }
 
 [node name="next_level" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, -30 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -30 )
 
 [node name="remove_last" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
@@ -542,9 +543,12 @@ wait_time = 5.0
 one_shot = true
 
 [node name="Change Red" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 14, -29 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -29 )
 
-[node name="Death_Floor" parent="." instance=ExtResource( 2 )]
+[node name="Change Blue" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -17 )
+
+[node name="Death_Floor" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -60.9619, -28.1335 )
 
 [connection signal="body_entered" from="remove_last" to="." method="_on_remove_last_body_entered"]

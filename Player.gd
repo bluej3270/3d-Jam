@@ -62,12 +62,12 @@ func _physics_process(delta):
 			if red:
 				pass
 			else:
-				get_parent().reset()
+				get_parent().reset(true)
 		elif col.collider.is_in_group('blue'):
 			if !red:
 				pass
 			else:
-				get_parent().reset()
+				get_parent().reset(true)
 		if col.collider.is_in_group('change_red'):
 			set_red()
 			
@@ -76,17 +76,19 @@ func _physics_process(delta):
 
 
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	$"Pivot/Camera/Start UI".show()
+	get_tree().paused = true
+	
 
 func set_red():
 	red = true
 	invince = true
-	$Pivot/Camera/Control/TextureProgress.tint_progress = Color(1.0, 0, 0)
+	$"Pivot/Camera/Game UI/TextureProgress".tint_progress = Color(1.0, 0, 0)
 
 func set_blue():
 	red = false
 	invince = true
-	$Pivot/Camera/Control/TextureProgress.tint_progress = Color(0, 0, 1)
+	$"Pivot/Camera/Game UI/TextureProgress".tint_progress = Color(0, 0, 1)
 	
 
 func is_red():
@@ -95,8 +97,8 @@ func is_red():
 func is_blue():
 	return !red
 
-func reset():
-	get_parent().reset()
+func reset(death):
+	get_parent().reset(death)
 
 func _on_Timer_timeout():
 	invince = false
@@ -120,23 +122,46 @@ func zone_exited():
 
 
 func _on_Death_Timer_timeout():
-	get_parent().reset()
+	get_parent().reset(true)
 
+func get_time():
+	return time
+
+func get_score():
+	return points
 
 func _on_one_sec_timeout():
 	if in_zone:
 		health -= 1
-		$Pivot/Camera/Control/TextureProgress.value = health
+		$"Pivot/Camera/Game UI/TextureProgress".value = health
 	elif health < 10:
 		health += 1
-		$Pivot/Camera/Control/TextureProgress.value = health
+		$"Pivot/Camera/Game UI/TextureProgress".value = health
 	
 	time += 1
-	$Pivot/Camera/Control/Label.text = 'Time: ' + str(time)
+	$"Pivot/Camera/Game UI/Label".text = 'Time: ' + str(time)
 
 func add_point():
 	points += 1
 	if points < 0:
-		$Pivot/Camera/Control/Label2.text = ('Score: 0')
+		$"Pivot/Camera/Game UI/Label".text = ('Score: 0')
 	else:
-		$Pivot/Camera/Control/Label2.text = 'Score: ' + str(points)
+		$"Pivot/Camera/Game UI/Label2".text = 'Score: ' + str(points)
+
+func show_death_screen(time, score):
+	print('Death Screen')
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	$"Pivot/Camera/Death UI".show()
+	$"Pivot/Camera/Death UI/VBoxContainer/Score".text = 'Score: ' + str(score)
+	$"Pivot/Camera/Death UI/VBoxContainer/Time".text = 'Time: ' + str(time)
+	$"Pivot/Camera/Start UI".show()
+	get_tree().paused = true
+	$"Pivot/Camera/Start UI".mouse_filter = Control.MOUSE_FILTER_STOP
+
+
+func _on_Button_pressed():
+	$"Pivot/Camera/Death UI".hide()
+	$"Pivot/Camera/Start UI".hide()
+	$"Pivot/Camera/Start UI".mouse_filter = Control.MOUSE_FILTER_IGNORE
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	get_tree().paused = false
